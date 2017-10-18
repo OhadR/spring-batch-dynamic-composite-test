@@ -1,4 +1,4 @@
-package com.ohadr.samples.dynamic_composite;
+package com.ohadr.samples.dynamic_composite.item;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

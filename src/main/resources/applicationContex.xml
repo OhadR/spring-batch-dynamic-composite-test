@@ -15,6 +15,7 @@
     <context:component-scan base-package="com.ohadr" />
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	
+	<import resource="tasks.ohad.xml"/>
 
     <!-- data-source -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
@@ -40,7 +41,7 @@
 
 <!-- <bean id="taskExecutor" class="org.springframework.core.task.SimpleAsyncTaskExecutor"/>  -->
 	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" p:corePoolSize="30" p:maxPoolSize="150" p:queueCapacity="10" />
-
+<!-- 	<bean id="taskExecutor" class="org.springframework.core.task.SimpleAsyncTaskExecutor" /> -->  
  
  
  </beans>

@@ -1,0 +1,53 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:batch="http://www.springframework.org/schema/batch" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd 
+	http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd">
+
+	
+	<batch:job id="OhadsTask">
+		<batch:description>OHADS</batch:description>
+		<batch:step id="OhadsStep">
+			<tasklet throttle-limit="7" task-executor="taskExecutor">
+				<chunk reader="ohadsReader" 
+					   processor="OhadsProcessor"
+					   writer="OhadsWriter" 
+					   commit-interval="1">
+				</chunk>
+			</tasklet>
+		</batch:step>
+	</batch:job>
+	
+	<bean id="delimitedLineTokenizer" class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+		<property name="names" value="firstName,lastName" />
+	</bean>
+	
+    <bean name="fieldSetMapper" class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
+     <property name="targetType" value="com.ohadr.samples.dynamic_composite.Person" />
+    </bean>
+
+	<bean id="ohadsReader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
+        <property name="resource" value="#{jobParameters['sample-data.csv']}" />
+        <property name="lineMapper">
+<!--        <bean class="org.springframework.batch.item.file.mapping.PassThroughLineMapper" />	-->
+            <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+		        <property name="tokenizer" ref="delimitedLineTokenizer" />
+		        <property name="fieldSetMapper" ref="fieldSetMapper" />
+		    </bean>            
+        </property>
+    </bean>
+	
+	<bean id="OhadsProcessor" class="com.ohadr.spring_batch_dynamic_composite.item.DynamicCompositeItemProcessor" />
+	
+	<bean id="OhadsWriter" class="com.ohadr.spring_batch_dynamic_composite.item.DynamicCompositeItemWriter" />
+
+	
+	<bean id="Ohad_01_Processor" class="com.ohadr.samples.dynamic_composite.item.TestItemProcessor" scope="step" />
+	<bean id="Ohad_02_Processor" class="com.ohadr.samples.dynamic_composite.item.TestItemProcessor" scope="step" />
+	
+	<bean id="Ohad_01_Writer" class="com.ohadr.samples.dynamic_composite.item.TestItemWriter" scope="step" />
+	<bean id="Ohad_02_Writer" class="com.ohadr.samples.dynamic_composite.item.TestItemWriter" scope="step" />
+
+
+</beans>
+
+	
