@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd 
+						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd 
+						http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+ 
+    <context:component-scan base-package="com.ohadr" />
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+
+    <!-- data-source -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://${MARS_DB_HOST}:3306/restful-login?allowMultiQueries=true&amp;characterEncoding=UTF-8" />
+		<property name="username" value="${MARS_DB_USER}" />		<!-- OhadDB -->
+		<property name="password" value="${MARS_DB_PASSWORD}" />	<!-- ohad0921 -->
+	</bean>
+
+
+ 	<!-- ================================================ -->
+	<!-- Spring Batch configuration			      -->
+	<!-- ================================================ -->
+
+    <batch:job-repository id="jobRepository" isolation-level-for-create="DEFAULT" table-prefix="MARS_"/>
+    <bean id="asyncJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher" p:jobRepository-ref="jobRepository" p:taskExecutor-ref="taskExecutor"/>
+    <bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher" p:jobRepository-ref="jobRepository"/>
+    <bean id="jobExplorer" class="org.springframework.batch.core.explore.support.JobExplorerFactoryBean"  p:dataSource-ref="dataSource" p:tablePrefix="MARS_"/>	
+    <bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry"/>
+    <bean id="jobRegistryBeanPostProcessor" class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor" p:jobRegistry-ref="jobRegistry"/>
+    <bean id="jobOperator" class="org.springframework.batch.core.launch.support.SimpleJobOperator" p:jobRepository-ref="jobRepository" p:jobExplorer-ref="jobExplorer" p:jobLauncher-ref="jobLauncher" p:jobRegistry-ref="jobRegistry"/>
+
+<!-- <bean id="taskExecutor" class="org.springframework.core.task.SimpleAsyncTaskExecutor"/>  -->
+	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" p:corePoolSize="30" p:maxPoolSize="150" p:queueCapacity="10" />
+
+ 
+ 
+ </beans>
