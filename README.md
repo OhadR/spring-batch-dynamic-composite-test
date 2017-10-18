@@ -18,3 +18,9 @@ Spring Boot runs schema-@@platform@@.sql automatically during startup. -all is t
 @EnableAutoConfiguration tells Spring Boot to start adding beans based on classpath settings, other beans, and various property settings.
 Normally you would add @EnableWebMvc for a Spring MVC app, but Spring Boot adds it automatically when it sees spring-webmvc on the classpath. This flags the application as a web application and activates key behaviors such as setting up a DispatcherServlet.
 @ComponentScan tells Spring to look for other components, configurations, and services in the hello package, allowing it to find the controllers.
+
+
+## How to run:
+
+C:\...\spring-batch-dynamic-composite-test>mvn clean install
+C:\...\spring-batch-dynamic-composite-test>java -jar target\gs-batch-processing-0.1.0.jar
