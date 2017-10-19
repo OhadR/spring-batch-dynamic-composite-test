@@ -26,11 +26,11 @@
     </bean>
 
 	<bean id="ohadsReader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
-        <property name="resource" value="#{jobParameters['sample-data.csv']}" />
+        <property name="resource" value="sample-data.csv" />
         <property name="lineMapper">
 <!--        <bean class="org.springframework.batch.item.file.mapping.PassThroughLineMapper" />	-->
             <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
-		        <property name="tokenizer" ref="delimitedLineTokenizer" />
+		        <property name="lineTokenizer" ref="delimitedLineTokenizer" />
 		        <property name="fieldSetMapper" ref="fieldSetMapper" />
 		    </bean>            
         </property>
