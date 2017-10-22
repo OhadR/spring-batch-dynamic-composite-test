@@ -1,6 +1,9 @@
 # spring-batch-dynamic-composite-test
 spring-batch test app for spring-batch-dynamic-composite
 
+This sample uses spring-boot, and particularly spring-batch-boot.
+
+## spring-boot
 
 
 The Spring Boot Maven plugin provides many convenient features:
@@ -20,7 +23,15 @@ Normally you would add @EnableWebMvc for a Spring MVC app, but Spring Boot adds 
 @ComponentScan tells Spring to look for other components, configurations, and services in the hello package, allowing it to find the controllers.
 
 
+This application is a spring-batch sample, that is non-web, and configures a job using XML configuration files (old style). The file tasks.ohad.xml configures
+the job which is chunk, and configures read, processor and writer.
+
+The reader is a simple file-reader, which is spring-batch' built-in `FlatFileItemReader`.
+
+The processor and writer are the to-be-tested  `DynamicCompositeItemProcessor` and `DynamicCompositeItemWriter` respectively.
+
 ## How to run:
 
 C:\...\spring-batch-dynamic-composite-test>mvn clean install
+
 C:\...\spring-batch-dynamic-composite-test>java -jar target\gs-batch-processing-0.1.0.jar
