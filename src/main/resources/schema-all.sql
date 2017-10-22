@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS PEOPLE;
 
 CREATE TABLE PEOPLE (
-	PEOPLE_ID BIGINT NOT NULL PRIMARY KEY ,  
-    first_name VARCHAR(20),
-    last_name VARCHAR(20)
+    first_name VARCHAR(20) NOT NULL,
+    last_name VARCHAR(20) NOT NULL
 );
+

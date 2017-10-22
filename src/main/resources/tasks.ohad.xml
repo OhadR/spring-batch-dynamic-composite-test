@@ -46,6 +46,12 @@
 	
 	<bean id="Ohad_01_Writer" class="com.ohadr.samples.dynamic_composite.item.TestItemWriter" scope="step" />
 	<bean id="Ohad_02_Writer" class="com.ohadr.samples.dynamic_composite.item.TestItemWriter" scope="step" />
+	<bean id="Ohad_03_Writer" class="org.springframework.batch.item.database.JdbcBatchItemWriter" scope="step">
+        <property name="dataSource" ref="dataSource" />
+        <property name="sql" value="INSERT INTO `PEOPLE` (`first_name`, `last_name`) VALUES (?, ?)" />
+        <property name="itemPreparedStatementSetter" ref="personPreparedStatementSetter" />
+	</bean>
+	
 
 
 </beans>
