@@ -1,6 +1,6 @@
 # spring-batch-dynamic-composite-test [![Build Status](https://travis-ci.org/OhadR/spring-batch-dynamic-composite-test.svg?branch=master)](https://travis-ci.org/OhadR/spring-batch-dynamic-composite-test)
 
-spring-batch test app for spring-batch-dynamic-composite
+spring-batch test app for [spring-batch-dynamic-composite](https://github.com/OhadR/spring-batch-dynamic-composite).
 
 This sample uses spring-boot, and particularly spring-batch-boot.
 
@@ -33,7 +33,7 @@ The processor and writer are the to-be-tested  `DynamicCompositeItemProcessor` a
 
 It configures a DB to show how to use the [spring-batch-dynamic-composite](https://github.com/OhadR/spring-batch-dynamic-composite), and in addition it configures another DB table to write the results it reads from a file. 
 
-## How to run:
+## how to run:
 
 C:\...\spring-batch-dynamic-composite-test>mvn clean install
 
