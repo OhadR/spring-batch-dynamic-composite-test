@@ -25,12 +25,13 @@ Normally you would add @EnableWebMvc for a Spring MVC app, but Spring Boot adds 
 
 ##this application
 
-This application is a spring-batch sample, that is non-web, and configures a job using XML configuration files (old style). The file tasks.ohad.xml configures
-the job which is chunk, and configures read, processor and writer.
+This application is a spring-batch sample, that is non-web, and configures a job using XML configuration files (old style). The file tasks.ohad.xml configures the job which is chunk, and configures read, processor and writer.
 
 The reader is a simple file-reader, which is spring-batch' built-in `FlatFileItemReader`.
 
 The processor and writer are the to-be-tested  `DynamicCompositeItemProcessor` and `DynamicCompositeItemWriter` respectively.
+
+It configures a DB to show how to use the [spring-batch-dynamic-composite](https://github.com/OhadR/spring-batch-dynamic-composite), and in addition it configures another DB table to write the results it reads from a file. 
 
 ## How to run:
 
